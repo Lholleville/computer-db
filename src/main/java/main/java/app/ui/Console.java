@@ -25,7 +25,7 @@ public class Console {
 			choice = scan.nextLine().trim();
 			switch(choice) {
 			case "1" :
-				CompanyService.findAllCompanies();
+				CompanyService.displayAllCompanies();
 				break;
 			case "2" :
 				ComputerService.displayAllComputers();

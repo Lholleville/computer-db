@@ -77,7 +77,7 @@ public class ConsoleAction {
 		System.out.print(UImessage.MSG_4_3.getMessage());
 		discontinuedEntry = (!scan.nextLine().isEmpty() ? LocalDate.parse(scan.nextLine()) : null);
 		
-		CompanyService.findAllCompanies();
+		CompanyService.displayAllCompanies();
 		System.out.print(UImessage.MSG_4_4.getMessage());		
 		companyIdEntry = (scan.hasNextLong()) ? scan.nextLong() : 0;
 	}

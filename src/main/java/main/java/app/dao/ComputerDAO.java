@@ -22,8 +22,13 @@ public class ComputerDAO {
 	//private static final Logger LOGGER = LoggerFactory.getLogger(ComputerDAO.class); 
 	
 	/*SQL QUERIES*/
-	private final String SQL_FIND_COMPUTER = "SELECT id, name, introduced, discontinued, company_id FROM computer WHERE id = ?";
-	private final String SQL_FIND_ALL_COMPUTER = "SELECT id, name, introduced, discontinued, company_id FROM computer";
+	private final String SQL_FIND_COMPUTER = "SELECT c.id, c.name, c.introduced, c.discontinued, c.company_id, company.id, company.name as company_name"
+    		+ " FROM computer c"
+    		+ " LEFT JOIN company ON c.company_id = company.id"
+	    	+ " WHERE id = ?";
+	private final String SQL_FIND_ALL_COMPUTER = "SELECT c.id, c.name, c.introduced, c.discontinued, c.company_id, company.id, company.name as company_name"
+    		+ " FROM computer c"
+    		+ " LEFT JOIN company ON c.company_id = company.id";
 	private final String SQL_CREATE_COMPUTER = "INSERT INTO computer (name, introduced, discontinued, company_id) VALUES(?, ?, ?, ?)";
 	private final String SQL_DELETE_COMPUTER = "DELETE FROM computer WHERE id = ?";
 	private final String SQL_UPDATE_COMPUTER = "UPDATE computer SET name = ?, introduced = ?, discontinued = ?, company_id = ? WHERE id = ?";
@@ -47,7 +52,7 @@ public class ComputerDAO {
 			stmt.setLong(1, id);
 			ResultSet result = stmt.executeQuery();
 			if(result.first()) {
-				computer = this.map(result.getLong("id"), result.getString("name"), result.getTimestamp("introduced"), result.getTimestamp("discontinued"), result.getLong("company_id"));
+				computer = this.map(result);
 			}
 			result.close();
 		}catch(SQLException e) {
@@ -67,7 +72,7 @@ public class ComputerDAO {
 			PreparedStatement stmt = connect.prepareStatement(SQL_FIND_ALL_COMPUTER);
 			ResultSet result = stmt.executeQuery();
 			while(result.next()) {
-				list.add(this.map(result.getLong("id"), result.getString("name"), result.getTimestamp("introduced"), result.getTimestamp("discontinued"), result.getLong("company_id")));
+				list.add(this.map(result));
 			}
 			result.close();
 		}catch(SQLException e) {
@@ -85,8 +90,8 @@ public class ComputerDAO {
 			Connection connect = ConnectionMYSQL.getInstance().connect();
 			PreparedStatement prepare = connect.prepareStatement(SQL_CREATE_COMPUTER);
 			prepare.setString(1, name);
-			prepare.setTimestamp(2, Timestamp.valueOf(introduced.atStartOfDay()));
-			prepare.setTimestamp(3, Timestamp.valueOf(discontinued.atStartOfDay()));
+			prepare.setTimestamp(2, introduced != null ? Timestamp.valueOf(introduced.atStartOfDay()) : null);
+			prepare.setTimestamp(3, discontinued != null ? Timestamp.valueOf(discontinued.atStartOfDay()) : null);
 			prepare.setLong(4, company);
 			prepare.executeUpdate();
 		}catch(SQLException e) {
@@ -162,16 +167,18 @@ public class ComputerDAO {
 		return nb;
 	}
 	
-	private Computer map(long id, String name, Timestamp intro, Timestamp disco, long companyId) {	
+	private Computer map(ResultSet result) throws SQLException {	
+		
+		Timestamp intro = result.getTimestamp("introduced");
+		Timestamp disco = result.getTimestamp("discontinued");
 		Computer computer = new Computer();
-		Optional<Company> company = CompanyDAO.getInstance().find(companyId);
+		Company company = new Company(result.getLong("company_id"), result.getString("company_name"));
 		computer = new Computer(
-				id, 
-		    	name,
+				result.getLong("id"), 
+				result.getString("name"), 
 		    	(intro != null) ? intro.toLocalDateTime().toLocalDate() : null,
 		    	(disco != null) ? disco.toLocalDateTime().toLocalDate() : null,
-		    	company.isPresent() ? company.get() : null
-		    	//new Company(id)
+		    	company
 		    );
 		return computer;
 	}

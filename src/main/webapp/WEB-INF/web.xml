@@ -15,6 +15,15 @@
 		<url-pattern>/home</url-pattern>
 	</servlet-mapping>	
 	
+	<servlet>
+		<servlet-name>CreateComputerServlet</servlet-name>
+		<servlet-class>main.java.app.servlets.CreateComputerServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>CreateComputerServlet</servlet-name>
+		<url-pattern>/computer/create</url-pattern>
+	</servlet-mapping>	
+	
 	<jsp-config>
         <jsp-property-group>
             <url-pattern>*.jsp</url-pattern>

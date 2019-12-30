@@ -1,5 +1,7 @@
 package main.java.app.service;
 
+import java.util.ArrayList;
+
 import main.java.app.dao.CompanyDAO;
 import main.java.app.model.Company;
 
@@ -18,9 +20,13 @@ public class CompanyService {
 		return companyService;
 	}
 	
-	public static void findAllCompanies() {
+	public static void displayAllCompanies() {
         for(Company company : companyDAO.list()) {
             System.out.println(company.toString());
         }
+	}
+	
+	public ArrayList<Company> findAllCompanies(){
+		return companyDAO.list();
 	}
 }

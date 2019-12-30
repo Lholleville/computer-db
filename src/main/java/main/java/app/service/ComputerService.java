@@ -59,6 +59,4 @@ public class ComputerService {
 	public long getNbComputers() {
 		return computerDAO.getComputerNumber();
 	}
-	
-	
 }

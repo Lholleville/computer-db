@@ -1,21 +1,3 @@
-<!DOCTYPE html>
-<html>
-<head>
-<title>Computer Database</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta charset="utf-8">
-<!-- Bootstrap -->
-<style><%@ include file ="../css/bootstrap.min.css"%></style>
-<style><%@ include file ="../css/font-awesome.css"%></style>
-<style><%@ include file ="../css/main.css"%></style>
-</head>
-<body>
-    <header class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
-            <a class="navbar-brand" href="home"> Application - Computer Database </a>
-        </div>
-    </header>
-
     <section id="main">
         <div class="container">
             <h1 id="homeTitle">
@@ -31,7 +13,7 @@
                     </form>
                 </div>
                 <div class="pull-right">
-                    <a class="btn btn-success" id="addComputer" href="addComputer.html">Add Computer</a> 
+                    <a class="btn btn-success" id="addComputer" href="http://localhost:8080/computer-database/computer/create">Add Computer</a> 
                     <a class="btn btn-default" id="editComputer" href="#" onclick="$.fn.toggleEditMode();">Edit</a>
                 </div>
             </div>
@@ -96,9 +78,9 @@
     <footer class="navbar-fixed-bottom">
         <div class="container text-center">
             <ul class="pagination">
-                <li>
-                    <a href="#" aria-label="Previous">
-                      <span aria-hidden="true">&laquo;</span>
+              <li>
+                  <a href="#" aria-label="Previous">
+                     <span aria-hidden="true">&laquo;</span> 	
                   </a>
               </li>
               <li><a href="#">1</a></li>
@@ -110,17 +92,17 @@
                 <a href="#" aria-label="Next">
                     <span aria-hidden="true">&raquo;</span>
                 </a>
-            </li>
-        </ul>
+              </li>
+           </ul>
 
-        <div class="btn-group btn-group-sm pull-right" role="group" >
-            <button type="button" class="btn btn-default">10</button>
-            <button type="button" class="btn btn-default">50</button>
-            <button type="button" class="btn btn-default">100</button>
-        </div>
-
+	       <div class="btn-group btn-group-sm pull-right" role="group" >
+	           <button type="button" class="btn btn-default">10</button>
+	           <button type="button" class="btn btn-default">50</button>
+	           <button type="button" class="btn btn-default">100</button>
+	       </div>
+		</div>
     </footer>	
-<script src="../js/jquery.min.js"></script>
+<script src="<c:url value = "js/jquery.min.js"/>"></script>
 <script src="../js/bootstrap.min.js"></script>
 <script src="../js/dashboard.js"></script>
 
