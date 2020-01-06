@@ -6,6 +6,7 @@ import java.time.format.DateTimeFormatter;
 import main.java.app.service.ComputerService;
 import main.java.app.validator.exceptions.CompanyDoesNotExistException;
 import main.java.app.validator.exceptions.DiscontinuedException;
+import main.java.app.validator.exceptions.NameContentException;
 import main.java.app.validator.exceptions.NameLengthException;
 import main.java.app.validator.modeltovalidate.ComputerValidate;
 
@@ -26,7 +27,7 @@ public class Validator {
 			
 		try {
 			Rules.legalName(c.getName());
-		} catch (NameLengthException e) {
+		} catch (NameLengthException | NameContentException e) {
 			return false;
 		}
 			

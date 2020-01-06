@@ -2,15 +2,18 @@ package main.java.app.validator;
 
 import java.time.LocalDate;
 import java.util.Optional;
-
+import java.util.regex.*;  
 import main.java.app.dao.CompanyDAO;
 import main.java.app.model.Company;
 import main.java.app.validator.exceptions.*;
 
 public  class Rules {
-	public static void legalName(String str) throws NameLengthException {
+	public static void legalName(String str) throws NameLengthException, NameContentException {
 		if(str.length() < 2 || str.length() > 255) {
 			throw new NameLengthException();
+		}
+		if(!Pattern.matches("^[0-9a-zA-Z \\-\\.\\'\\_]*$", str)) {
+			throw new NameContentException();
 		}
 	}
 	

@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -34,7 +35,11 @@ public class ComputerDAO {
 	private final String SQL_UPDATE_COMPUTER = "UPDATE computer SET name = ?, introduced = ?, discontinued = ?, company_id = ? WHERE id = ?";
 	private final String SQL_FIND_LAST_COMPUTER_ID = "SELECT id, name, introduced, discontinued, company_id FROM computer ORDER BY id DESC LIMIT 1";
 	private final String SQL_GET_COMPUTER_COUNT = "SELECT count(id) as nb FROM computer";
-	
+	private final String PAGINATION = " LIMIT ?, ?";
+	private final String SQL_FIND_COMPUTER_BY_NAME = "SELECT c.id, c.name, c.introduced, c.discontinued, c.company_id, company.id, company.name as company_name"
+    		+ " FROM computer c"
+    		+ " LEFT JOIN company ON c.company_id = company.id"
+    		+ " WHERE c.name LIKE ?;";
 	private ComputerDAO() {}
 	
 	public static ComputerDAO getInstance() {
@@ -148,14 +153,14 @@ public class ComputerDAO {
 		return computer.get();
 	}
 
-	public long getComputerNumber() {
-		long nb = 0;
+	public int getComputerNumber() {
+		int nb = 0;
 		Connection connect = ConnectionMYSQL.getInstance().connect();
 		try{
 			PreparedStatement stmt = connect.prepareStatement(SQL_GET_COMPUTER_COUNT); 
 			ResultSet result = stmt.executeQuery();
 			if(result.first()) {
-				nb = result.getLong("nb");
+				nb = result.getInt("nb");
 			}
 			result.close();
 		}catch(SQLException e) {
@@ -165,6 +170,49 @@ public class ComputerDAO {
 			ConnectionMYSQL.getInstance().disconnect();
 		}
 		return nb;
+	}
+	
+	public ArrayList<Computer> paginate(int page, int show){
+		ArrayList<Computer> computers = new ArrayList<Computer>();
+		
+		int limit = show;
+		int offset = page * limit - (show - 1) - 1;
+		Connection connect = ConnectionMYSQL.getInstance().connect();
+		try {
+			PreparedStatement stmt = connect.prepareStatement(SQL_FIND_ALL_COMPUTER + PAGINATION); 
+			stmt.setInt(1, offset);
+			stmt.setInt(2, limit);
+			ResultSet result = stmt.executeQuery();
+			while(result.next()) {
+				computers.add(this.map(result));
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			ConnectionMYSQL.getInstance().disconnect();
+		}
+		
+		return computers;
+	}
+	
+	public ArrayList<Computer> findByName(String name){
+		 ArrayList<Computer> computer = new ArrayList<Computer>();
+		try {
+			Connection connect = ConnectionMYSQL.getInstance().connect();
+			PreparedStatement stmt = connect.prepareStatement(SQL_FIND_COMPUTER_BY_NAME);
+			stmt.setString(1, "%"+name+"%");
+			ResultSet result = stmt.executeQuery();
+			while(result.next()) {
+				computer.add(this.map(result));
+			}
+			result.close();
+		}catch(SQLException e) {
+			e.printStackTrace();
+			//LOGGER.error("error");
+		}finally {
+			ConnectionMYSQL.getInstance().disconnect();
+		}
+		return computer;
 	}
 	
 	private Computer map(ResultSet result) throws SQLException {	

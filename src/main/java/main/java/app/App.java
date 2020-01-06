@@ -1,15 +1,11 @@
 package main.java.app;
 
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.util.Arrays;
-
-import main.java.app.ui.Console;
+import static main.java.app.ui.Console.displayCli;
 
 public class App 
 {
-	public static void main(String[] args)
+	public static void main(String[] s)
     {
-		Console.displayCli();
+		displayCli();
 	}
-}
+} 	

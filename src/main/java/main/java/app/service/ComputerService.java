@@ -32,6 +32,10 @@ public class ComputerService {
 		return computerDAO.list();
 	}
 	
+	public ArrayList<Computer> findComputerPaginate(int page, int show){
+		return computerDAO.paginate(page, show);
+	}
+	
 	public static void findComputer(long id) {
 		Optional<Computer> computer = computerDAO.find(id);
 		System.out.println((computer.isPresent()) ? computer.get().toString() : "No computer found with id " + id);
@@ -56,7 +60,11 @@ public class ComputerService {
 		computerDAO.delete(id);
 	}
 	
-	public long getNbComputers() {
+	public int getNbComputers() {
 		return computerDAO.getComputerNumber();
+	}
+	
+	public ArrayList<Computer> findComputerByName(String name){
+		return computerDAO.findByName(name);
 	}
 }

@@ -91,3 +91,69 @@ $(document).keydown(function(e) {
     }
 });
 
+$('#previous').click(function(e){
+	var page = parseInt(getCurrentPage()) - 1;
+	if(page < 1){
+		page = 1;
+	}
+	paginatePage("page=" + page)
+});
+
+$('#next').click(function(e){
+	var page = parseInt(getCurrentPage()) + 1;
+	paginatePage("page=" + page)
+});
+
+function getCurrentPage(){
+	var page = 1;
+	var searchParams = new URLSearchParams(window.location.search)
+	if(searchParams.has('page')){
+		page = searchParams.get('page');
+	}
+	return page;
+}
+$('#show100').click(function(e){
+	paginateShow("show=100")
+});
+$('#show50').click(function(e){
+	paginateShow("show=50")
+});
+$('#show10').click(function(e){
+	paginateShow("show=10")
+});
+
+$('.page').click(function(e){
+	var id = $(this).attr("id");
+	console.log(id);
+	paginatePage("page=" + id);
+});
+
+function paginatePage(addfield){
+	var href = window.location.href;
+	var newHref;
+	if (href.indexOf('?') !== -1) {
+		if(href.includes("page=")){
+			newHref = href.replace(/page=[0-9]{1,4}/, addfield);
+		}else{
+			newHref = href + addfield;
+		}
+	}else{
+		newHref = href + '?' + addfield;
+	}
+	window.location.href = newHref;
+}
+
+function paginateShow(addfield){
+	var href = window.location.href;
+	var newHref;
+	if (href.indexOf('?') !== -1) {
+		if(href.includes("&show=")){
+			newHref = href.replace(/&show=[0-9]{1,4}/, "&" + addfield);
+		}else{
+			newHref = href + '&' + addfield;
+		}
+	}else{
+		newHref = href + '?' + addfield;
+	}
+	window.location.href = newHref;
+}

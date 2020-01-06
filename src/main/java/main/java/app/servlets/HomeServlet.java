@@ -15,15 +15,42 @@ import main.java.app.service.ComputerService;
 public class HomeServlet extends HttpServlet {
 
 	private ComputerService computerService = ComputerService.getInstance();
+	private int page = 1;
+	private int show = 10;
+	private int nbComputers = 0;
+	private int nbPages = 0;
+	private ArrayList<Computer> computers;
 	
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		long nbComputers = computerService.getNbComputers();
+		this.nbComputers = computerService.getNbComputers();
+		paginate(request.getParameter("page"), request.getParameter("show"));
 		
-		ArrayList<Computer> computers = computerService.findAllComputers();
+		if(request.getParameter("search") != null) {
+			this.computers = computerService.findComputerByName(request.getParameter("search"));
+			this.nbComputers = computers.size();
+		}else {
+			this.computers = computerService.findComputerPaginate(this.page, this.show);
+		}
 		
 		request.setAttribute("nbComputers", nbComputers);
-		request.setAttribute("computers", computers);
-		this.getServletContext().getRequestDispatcher("/WEB-INF/views/dashboard.jsp").forward(request, response);
+		request.setAttribute("computers", this.computers);
+		request.setAttribute("nbPages", this.nbPages);
+		this.getServletContext().getRequestDispatcher("/WEB-INF/views/dashboard.jsp?page="+page+"&show="+show).forward(request, response);
+	}
+	
+	private void paginate(String pageGET, String showGET) {
+		
+		if(showGET != null && !showGET.isEmpty()) {
+			this.show  = Integer.parseInt(showGET);
+			this.show = (this.show <= 0) ? 1 : this.show;
+			this.nbPages = (int)this.nbComputers / this.show;
+			System.out.println(this.nbPages);
+		}
+		
+		if(pageGET != null && !pageGET.isEmpty()) {
+			page = Integer.parseInt(pageGET);
+			page = page <= 0 ? 1: page;
+		}
 	}
 }

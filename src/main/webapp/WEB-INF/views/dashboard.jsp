@@ -63,7 +63,7 @@
                             <input type="checkbox" name="cb" class="cb" value="0">
                         </td>
                         <td>
-                            <a href="editComputer.html" onclick="">${computer.getName()}</a>
+                            <a href="editComputer.html" onclick="">${computer.getName()}  ( ${computer.getId() } ) </a>
                         </td>
                         <td>${computer.getIntroductionDate()}</td>
                         <td>${computer.getDiscontinuedDate()}</td>
@@ -79,32 +79,39 @@
         <div class="container text-center">
             <ul class="pagination">
               <li>
-                  <a href="#" aria-label="Previous">
+                  <a href="#" aria-label="Previous" role="button" id="previous">
                      <span aria-hidden="true">&laquo;</span> 	
                   </a>
               </li>
-              <li><a href="#">1</a></li>
-              <li><a href="#">2</a></li>
-              <li><a href="#">3</a></li>
-              <li><a href="#">4</a></li>
-              <li><a href="#">5</a></li>
+              <c:if test="${nbPages  <= 5}">
+	              <c:forEach var="i" begin="1" end="${nbPages}" step="1">
+	              	<li><a href="#" class="page" role="button" id="<c:out value="${i}"/>"><c:out value="${i}"/></a></li>
+	              </c:forEach>
+              </c:if>
+              <c:if test="${nbPages  > 5}">
+              	<li><a href="#" class="page" role="button" id="1"><c:out value="1"/></a></li>
+              	<li><a href="#" role="button">...</a></li>
+              	<c:forEach var="i" begin="${nbPages - 9}" end="${nbPages}" step="1">
+	            	<li><a href="#" class="page" role="button" id="<c:out value="${i}"/>"><c:out value="${i}"/></a></li>
+	            </c:forEach>
+              </c:if>
               <li>
-                <a href="#" aria-label="Next">
+                <a href="#" aria-label="Next" role="button" id="next">
                     <span aria-hidden="true">&raquo;</span>
                 </a>
               </li>
            </ul>
 
 	       <div class="btn-group btn-group-sm pull-right" role="group" >
-	           <button type="button" class="btn btn-default">10</button>
-	           <button type="button" class="btn btn-default">50</button>
-	           <button type="button" class="btn btn-default">100</button>
+	           <button type="button" class="btn btn-default" id="show10">10</button>
+	           <button type="button" class="btn btn-default" id="show50">50</button>
+	           <button type="button" class="btn btn-default" id="show100">100</button>
 	       </div>
 		</div>
     </footer>	
-<script src="<c:url value = "js/jquery.min.js"/>"></script>
-<script src="../js/bootstrap.min.js"></script>
-<script src="../js/dashboard.js"></script>
+<script><%@ include file ="../js/jquery.min.js"%></script>
+<script><%@ include file ="../js/bootstrap.min.js"%></script>
+<script><%@ include file ="../js/dashboard.js"%></script>
 
 </body>
 </html>
