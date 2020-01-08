@@ -7,8 +7,11 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Properties;
+import com.zaxxer.hikari.HikariDataSource;
 
 public class ConnectionMYSQL {
+	
+	//private HikariDataSource hikari;
 	
 	private String url;
 	private String user;
@@ -28,6 +31,10 @@ public class ConnectionMYSQL {
 //		} catch (IOException e) {
 //			e.printStackTrace();
 //		}
+			
+//		hikari = new HikariDataSource();
+//		hikari.setMaximumPoolSize(10); // can support 3000 connections
+//		hikari.setDataSourceClassName("com.mysql.jdbc.jdbc2.optional.MysqlDataSource");
 	}
 	
 	public static ConnectionMYSQL getInstance() {

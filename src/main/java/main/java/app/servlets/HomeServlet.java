@@ -21,6 +21,21 @@ public class HomeServlet extends HttpServlet {
 	private int nbPages = 0;
 	private ArrayList<Computer> computers;
 	
+	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		
+		String selection = request.getParameter("selection");
+		
+		String ids[] = selection.split(",");
+		
+		for(String id : ids) {
+			System.out.println(id);
+			computerService.deleteComputer(Long.parseLong(id));
+		}
+		
+		this.doGet(request, response);
+	}
+	
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		this.nbComputers = computerService.getNbComputers();
@@ -45,7 +60,6 @@ public class HomeServlet extends HttpServlet {
 			this.show  = Integer.parseInt(showGET);
 			this.show = (this.show <= 0) ? 1 : this.show;
 			this.nbPages = (int)this.nbComputers / this.show;
-			System.out.println(this.nbPages);
 		}
 		
 		if(pageGET != null && !pageGET.isEmpty()) {

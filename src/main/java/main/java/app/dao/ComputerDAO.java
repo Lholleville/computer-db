@@ -26,12 +26,12 @@ public class ComputerDAO {
 	private final String SQL_FIND_COMPUTER = "SELECT c.id, c.name, c.introduced, c.discontinued, c.company_id, company.id, company.name as company_name"
     		+ " FROM computer c"
     		+ " LEFT JOIN company ON c.company_id = company.id"
-	    	+ " WHERE id = ?";
+	    	+ " WHERE c.id = ?";
 	private final String SQL_FIND_ALL_COMPUTER = "SELECT c.id, c.name, c.introduced, c.discontinued, c.company_id, company.id, company.name as company_name"
     		+ " FROM computer c"
     		+ " LEFT JOIN company ON c.company_id = company.id";
 	private final String SQL_CREATE_COMPUTER = "INSERT INTO computer (name, introduced, discontinued, company_id) VALUES(?, ?, ?, ?)";
-	private final String SQL_DELETE_COMPUTER = "DELETE FROM computer WHERE id = ?";
+	private final String SQL_DELETE_COMPUTER = "DELETE FROM computer WHERE computer.id = ?";
 	private final String SQL_UPDATE_COMPUTER = "UPDATE computer SET name = ?, introduced = ?, discontinued = ?, company_id = ? WHERE id = ?";
 	private final String SQL_FIND_LAST_COMPUTER_ID = "SELECT id, name, introduced, discontinued, company_id FROM computer ORDER BY id DESC LIMIT 1";
 	private final String SQL_GET_COMPUTER_COUNT = "SELECT count(id) as nb FROM computer";
