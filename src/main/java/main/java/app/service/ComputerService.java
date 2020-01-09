@@ -36,9 +36,10 @@ public class ComputerService {
 		return computerDAO.paginate(page, show);
 	}
 	
-	public static void findComputer(long id) {
+	public static Optional<Computer> findComputer(long id) {
 		Optional<Computer> computer = computerDAO.find(id);
 		System.out.println((computer.isPresent()) ? computer.get().toString() : "No computer found with id " + id);
+		return computer;
 	}
 	
 	public static void createComputer(String name, LocalDate introduced, LocalDate discontinued, long company) {
@@ -48,9 +49,9 @@ public class ComputerService {
 	public static void updateComputer(long id, String name, LocalDate introduced, LocalDate discontinued, long companyId) {
 		Optional<Computer> computer = ComputerDAO.getInstance().find(id);
 		if(computer.isPresent()) { 
-			System.out.println(computer.get().toString());
+			//System.out.println(computer.get().toString());
 			computerDAO.update(id, name, introduced, discontinued, companyId);
-			System.out.println("Computer : " + computer.get().getName() + " modified");
+			System.out.println("Computer : " + computer.get().getName() + " modified into" + name);
 		}else {
 			System.out.println("No computer to update");
 		}	

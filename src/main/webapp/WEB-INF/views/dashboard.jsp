@@ -63,7 +63,7 @@
                             <input type="checkbox" name="cb" class="cb" value="${computer.getId()}">
                         </td>
                         <td>
-                            <a href="editComputer.html" onclick="">${computer.getName()}  ( ${computer.getId() } ) </a>
+                            <a href="http://localhost:8080/computer-database/computer/edit?id=${computer.getId()}" onclick="">${computer.getName()}  ( ${computer.getId() } ) </a>
                         </td>
                         <td>${computer.getIntroductionDate()}</td>
                         <td>${computer.getDiscontinuedDate()}</td>

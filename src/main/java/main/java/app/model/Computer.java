@@ -44,6 +44,13 @@ public class Computer {
 		return introductionDate;
 	}
 
+	public LocalDate getIntroducedDate() {
+		return introductionDate;
+	}
+	public void setIntroducedDate(LocalDate introductionDate) {
+		this.introductionDate = introductionDate;
+	}
+	
 	public void setIntroductionDate(LocalDate introductionDate) {
 		this.introductionDate = introductionDate;
 	}

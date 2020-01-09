@@ -68,7 +68,7 @@ public class ConsoleAction {
 	 */
 	private static void setComputerInfo() {
 		
-		System.out.print(UImessage.MSG_4_1);
+		System.out.print(UImessage.MSG_4_1.getMessage());
 		nameEntry = scan.nextLine();
 		
 		System.out.print(UImessage.MSG_4_2.getMessage());

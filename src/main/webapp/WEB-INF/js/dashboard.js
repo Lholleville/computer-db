@@ -174,5 +174,14 @@ function paginateShow(addfield){
 	}else{
 		newHref = href + '?' + addfield;
 	}
-	window.location.href = newHref;
+
+	window.location.href = removeLastEsperluetteDeSesMorts(newHref);
+}
+
+
+function removeLastEsperluetteDeSesMorts(href){
+	if(href.indexOf('&') == href.length - 1){
+		href = href.slice(0, -1)
+	}
+	return href;
 }

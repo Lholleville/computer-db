@@ -5,6 +5,7 @@ import java.time.format.DateTimeFormatter;
 
 public class ComputerValidate {
 	
+	private long id;
 	private String name;
 	private LocalDate introduced;
 	private LocalDate discontinued;
@@ -12,7 +13,7 @@ public class ComputerValidate {
 	private static DateTimeFormatter f = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
 	public ComputerValidate(String name, String introduced, String discontinued, String companyId){
-		this.name = name;
+		setName(name);
 		setIntroduced(introduced);
 		setDiscontinued(discontinued);
 		setCompanyId(companyId);
@@ -32,7 +33,7 @@ public class ComputerValidate {
 
 	public void setIntroduced(String introduced) {
 		LocalDate localdate = null;
-		if(!introduced.isEmpty()) {
+		if(introduced != null) {
 			localdate = LocalDate.parse(introduced, f); 
 		}
 		this.introduced = localdate;
@@ -44,7 +45,7 @@ public class ComputerValidate {
 
 	public void setDiscontinued(String discontinued) {
 		LocalDate localdate = null;
-		if(!discontinued.isEmpty()) {
+		if(discontinued != null) {
 			localdate = LocalDate.parse(discontinued, f); 
 		}
 		this.discontinued = localdate;
@@ -60,5 +61,21 @@ public class ComputerValidate {
 			tmp = Long.parseLong(companyId);
 		 }
 		this.companyId = tmp;
+	}
+	
+	public long getId() {
+		return this.id;
+	}
+	
+	public void setId(long id) {
+		this.id = id;
+	}
+	
+	public String toString() {
+		return this.getId() 
+				+ " " + this.getName() 
+				+ " " + this.getIntroduced() 
+				+ " " +  this.getDiscontinued() 
+				+ " " +  this.getCompanyId(); 
 	}
 }

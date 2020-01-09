@@ -24,6 +24,15 @@
 		<url-pattern>/computer/create</url-pattern>
 	</servlet-mapping>	
 	
+	<servlet>
+		<servlet-name>EditComputerServlet</servlet-name>
+		<servlet-class>main.java.app.servlets.EditComputerServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>EditComputerServlet</servlet-name>
+		<url-pattern>/computer/edit</url-pattern>
+	</servlet-mapping>	
+	
 	<jsp-config>
         <jsp-property-group>
             <url-pattern>*.jsp</url-pattern>

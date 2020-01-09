@@ -22,6 +22,7 @@ public class HomeServlet extends HttpServlet {
 	private int page = 1;
 	private int show = 10;
 	private int nbComputers = 0;
+	private int nbComputersTotal = 0;
 	private int nbPages = 0;
 	private ArrayList<Computer> computers;
 	
@@ -42,21 +43,23 @@ public class HomeServlet extends HttpServlet {
 	
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		this.nbComputers = computerService.getNbComputers();
+		this.nbComputersTotal = computerService.getNbComputers();
 		paginate(request.getParameter("page"), request.getParameter("show"));
+		this.computers = computerService.findComputerPaginate(this.page, this.show);
 		
 		if(request.getParameter("search") != null) {
 			this.computers = computerService.findComputerByName(request.getParameter("search"));
-			this.nbComputers = computers.size();
-		}else {
-			this.computers = computerService.findComputerPaginate(this.page, this.show);
 		}
+		
 		if(request.getParameter("order") != null) {
 			Collections.sort(this.computers, new NameComparator());
 		}
-		request.setAttribute("nbComputers", nbComputers);
+		
+		this.nbComputers = computers.size();
+		request.setAttribute("nbComputers", this.nbComputersTotal);
 		request.setAttribute("computers", this.computers);
 		request.setAttribute("nbPages", this.nbPages);
+		
 		this.getServletContext().getRequestDispatcher("/WEB-INF/views/dashboard.jsp?page="+page+"&show="+show).forward(request, response);
 	}
 	
@@ -65,7 +68,7 @@ public class HomeServlet extends HttpServlet {
 		if(showGET != null && !showGET.isEmpty()) {
 			this.show  = Integer.parseInt(showGET);
 			this.show = (this.show <= 0) ? 1 : this.show;
-			this.nbPages = (int)this.nbComputers / this.show;
+			this.nbPages = (int)this.nbComputersTotal / this.show;
 		}
 		
 		if(pageGET != null && !pageGET.isEmpty()) {
