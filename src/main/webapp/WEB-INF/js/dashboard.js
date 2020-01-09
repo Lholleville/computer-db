@@ -70,7 +70,6 @@ $(function() {
 }( jQuery ));
 
 
-
 //Event handling
 //Onkeydown
 $(document).keydown(function(e) {
@@ -128,14 +127,34 @@ $('.page').click(function(e){
 	paginatePage("page=" + id);
 });
 
+$('#orderComputers').click(function(e){
+	console.log("test");
+	order("order=name");
+});
+
+function order(addfield){
+	var href = window.location.href;
+	var newHref;
+	if (href.indexOf('?') !== -1) {
+		if(href.includes("order=")){
+			newHref = href.replace(/order=[a-z]+/, "");
+		}else{
+			newHref = href + '&' + addfield;
+		}
+	}else{
+		newHref = href + '?' + addfield;
+	}
+	window.location.href = newHref;
+}
+
 function paginatePage(addfield){
 	var href = window.location.href;
 	var newHref;
 	if (href.indexOf('?') !== -1) {
 		if(href.includes("page=")){
-			newHref = href.replace(/page=[0-9]{1,4}/, addfield);
+			newHref = href.replace(/page=[0-9]{1,4}/, '&' + addfield);
 		}else{
-			newHref = href + addfield;
+			newHref = href + '&' + addfield;
 		}
 	}else{
 		newHref = href + '?' + addfield;

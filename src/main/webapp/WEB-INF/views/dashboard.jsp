@@ -33,13 +33,13 @@
                         <th class="editMode" style="width: 60px; height: 22px;">
                             <input type="checkbox" id="selectall"/> 
                             <span style="vertical-align: top;">
-                                 -  <a href="#" id="deleteSelected" onclick="$.fn.deleteSelected();">
+                                 -  <a href="" id="deleteSelected" onclick="$.fn.deleteSelected();">
                                         <i class="fa fa-trash-o fa-lg"></i>
                                     </a>
                             </span>
                         </th>
                         <th>
-                            Computer name
+                            <a href="#" role="button" id="orderComputers">Computer name</a>
                         </th>
                         <th>
                             Introduced date

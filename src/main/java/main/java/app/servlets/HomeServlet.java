@@ -2,12 +2,16 @@ package main.java.app.servlets;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import main.java.app.comparator.NameComparator;
 import main.java.app.model.Computer;
 import main.java.app.service.ComputerService;
 
@@ -47,7 +51,9 @@ public class HomeServlet extends HttpServlet {
 		}else {
 			this.computers = computerService.findComputerPaginate(this.page, this.show);
 		}
-		
+		if(request.getParameter("order") != null) {
+			Collections.sort(this.computers, new NameComparator());
+		}
 		request.setAttribute("nbComputers", nbComputers);
 		request.setAttribute("computers", this.computers);
 		request.setAttribute("nbPages", this.nbPages);
