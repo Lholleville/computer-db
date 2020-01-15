@@ -1,4 +1,4 @@
-package config;
+package main.java.app.config;
 
 import org.springframework.context.annotation.*;
 import org.springframework.web.servlet.ViewResolver;
@@ -6,8 +6,8 @@ import org.springframework.web.servlet.config.annotation.*;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.JstlView;
 
-@EnableWebMvc
 @Configuration
+@EnableWebMvc
 @ComponentScan(basePackages = {"main.java.app.controller"})
 public class WebMvcConfig implements WebMvcConfigurer {
 

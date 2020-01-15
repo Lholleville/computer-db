@@ -4,8 +4,8 @@ import static main.java.app.ui.Console.displayCli;
 
 public class App 
 {
-	public static void main(String[] s)
-    {
-		displayCli();
-	}
-} 	
+	public static void main(String[] s) {
+		//displayCli();	
+}
+}
+	
